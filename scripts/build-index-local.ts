@@ -73,7 +73,7 @@ function classifySection(title: string): string {
 
 function buildIndex() {
   console.log("Parsing dataset…");
-  const raw = readFileSync("ashford-data.md", "utf-8").replace(/\r\n/g, "\n");
+  const raw = readFileSync("HabsGirls_Merged_Dataset_Final.md", "utf-8").replace(/\r\n/g, "\n");
   const sections = raw.split(/\n---\n/).filter((s) => s.trim());
 
   const chunks: Chunk[] = [];
@@ -146,7 +146,7 @@ function buildIndex() {
     process.stdout.write(`  ✓ ${title.slice(0, 50)}\n`);
   }
 
-  const outPath = "public/data/ashford-chunks.json";
+  const outPath = "public/data/habs-girls-chunks.json";
   mkdirSync(dirname(outPath), { recursive: true });
   const json = JSON.stringify(chunks);
   writeFileSync(outPath, json);
