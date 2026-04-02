@@ -22,20 +22,19 @@ function classifySection(title: string): string {
     t.includes("payment") ||
     t.includes("vat") ||
     t.includes("bursar") ||
-    t.includes("scholarship") ||
-    t.includes("additional cost") ||
-    t.includes("transport")
+    t.includes("scholarship")
   )
     return "Financial";
   if (
     t.includes("admissions") ||
     t.includes("entry") ||
     t.includes("occasional") ||
+    t.includes("faq") ||
     t.includes("reception") ||
     t.includes("year 3") ||
     t.includes("year 7") ||
-    t.includes("sixth form entry") ||
-    t.includes("overseas")
+    t.includes("year 9") ||
+    t.includes("sixth form entry")
   )
     return "Admissions";
   if (
@@ -44,22 +43,18 @@ function classifySection(title: string): string {
     t.includes("sixth form") ||
     t.includes("diploma") ||
     t.includes("senior school") ||
-    t.includes("junior school") ||
-    t.includes("university") ||
-    t.includes("result")
+    t.includes("prep school") ||
+    t.includes("prep co") ||
+    t.includes("exam result")
   )
     return "Academic";
   if (
     t.includes("sport") ||
-    t.includes("music") ||
-    t.includes("drama") ||
-    t.includes("co-curricular") ||
-    t.includes("ccf") ||
-    t.includes("duke of edinburgh") ||
-    t.includes("innovation") ||
-    t.includes("trips") ||
+    t.includes("performance") ||
     t.includes("house") ||
-    t.includes("partnership")
+    t.includes("facilities") ||
+    t.includes("co-curricular") ||
+    t.includes("music")
   )
     return "Co-Curricular";
   if (
@@ -70,15 +65,7 @@ function classifySection(title: string): string {
     t.includes("overview") ||
     t.includes("structure") ||
     t.includes("contact") ||
-    t.includes("affiliations") ||
-    t.includes("welcome") ||
-    t.includes("pastoral") ||
-    t.includes("wellbeing") ||
-    t.includes("diversity") ||
-    t.includes("sen") ||
-    t.includes("facilities") ||
-    t.includes("parent") ||
-    t.includes("guild")
+    t.includes("affiliations")
   )
     return "About";
   return "General";
@@ -86,7 +73,7 @@ function classifySection(title: string): string {
 
 function buildIndex() {
   console.log("Parsing dataset…");
-  const raw = readFileSync("HabsGirls_Merged_Dataset_Final.md", "utf-8").replace(/\r\n/g, "\n");
+  const raw = readFileSync("ashford-data.md", "utf-8").replace(/\r\n/g, "\n");
   const sections = raw.split(/\n---\n/).filter((s) => s.trim());
 
   const chunks: Chunk[] = [];
@@ -159,7 +146,7 @@ function buildIndex() {
     process.stdout.write(`  ✓ ${title.slice(0, 50)}\n`);
   }
 
-  const outPath = "public/data/habsgirls-chunks.json";
+  const outPath = "public/data/ashford-chunks.json";
   mkdirSync(dirname(outPath), { recursive: true });
   const json = JSON.stringify(chunks);
   writeFileSync(outPath, json);

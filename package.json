@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "build:index": "npx ts-node --project tsconfig.scripts.json scripts/build-index.ts",
-    "build:index-local": "npx ts-node --project tsconfig.scripts.json scripts/build-index-local.ts",
     "lint": "next lint"
   },
   "dependencies": {
