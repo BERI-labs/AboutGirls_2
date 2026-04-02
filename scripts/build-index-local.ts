@@ -146,7 +146,7 @@ function buildIndex() {
     process.stdout.write(`  ✓ ${title.slice(0, 50)}\n`);
   }
 
-  const outPath = "public/data/habs-girls-chunks.json";
+  const outPath = "public/data/habsgirls-chunks.json";
   mkdirSync(dirname(outPath), { recursive: true });
   const json = JSON.stringify(chunks);
   writeFileSync(outPath, json);
