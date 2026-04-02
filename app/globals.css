@@ -6,23 +6,23 @@
 
 :root {
   --school-bg:           #ffffff;
-  --school-surface:      #f7f7f5;
-  --school-surface-alt:  #f0f4f8;
-  --school-border:       #e0e0e0;
-  --school-border-light: #eaeaea;
-  --school-primary:      #1B4F72;
-  --school-primary-light:#2471A3;
-  --school-accent:       #D4AC0D;
-  --school-accent-light: #FDF2C5;
-  --school-accent-hover: #B7950B;
+  --school-surface:      #f5f7fa;
+  --school-surface-alt:  #eef1f6;
+  --school-border:       #e0e4ec;
+  --school-border-light: #eaecf2;
+  --school-primary:      #0F1929;
+  --school-primary-light:#1a2d4a;
+  --school-accent:       #C96050;
+  --school-accent-light: #FBEAE7;
+  --school-accent-hover: #b04f3e;
   --school-text:         #1a1a1a;
   --school-text-soft:    #6b6b6b;
   --school-text-muted:   #9ca3af;
-  --school-user-bubble:  #e2e9f4;
+  --school-user-bubble:  #e8ecf4;
   --school-error:        #E85454;
   --school-success:      #4ADE80;
-  --school-shadow:       rgba(27, 79, 114, 0.12);
-  --school-shadow-lg:    rgba(27, 79, 114, 0.18);
+  --school-shadow:       rgba(15, 25, 41, 0.12);
+  --school-shadow-lg:    rgba(15, 25, 41, 0.18);
 }
 
 * {
@@ -112,7 +112,7 @@ body {
 }
 
 .school-prose code {
-  background: rgba(27, 79, 114, 0.08);
+  background: rgba(201, 96, 80, 0.08);
   color: var(--school-primary);
   padding: 0.1em 0.3em;
   border-radius: 3px;
