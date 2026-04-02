@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === "production";
-const repoName = "general";
+const repoName = "AboutGirls_2";
 
 const base = isProd ? `/${repoName}` : "";
 
