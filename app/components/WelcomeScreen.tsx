@@ -1,6 +1,6 @@
 "use client";
 
-import { SCHOOL_NAME, LOGO_PATH, SUGGESTED_QUESTIONS } from "../lib/school-config";
+import { SCHOOL_NAME, LOGO_PATH, FEATURED_QUESTION, SUGGESTED_QUESTIONS } from "../lib/school-config";
 
 interface WelcomeScreenProps {
   onQuestion: (q: string) => void;
@@ -62,6 +62,19 @@ export function WelcomeScreen({ onQuestion }: WelcomeScreenProps) {
           from the school knowledge base.
         </p>
       </div>
+
+      {/* Featured question */}
+      <button
+        onClick={() => onQuestion(FEATURED_QUESTION)}
+        className="starter-chip w-full max-w-2xl px-4 py-3 rounded-lg text-sm text-left mb-3 font-medium"
+        style={{
+          color: "var(--school-surface, #fff)",
+          background: "var(--school-primary)",
+          border: "none",
+        }}
+      >
+        {FEATURED_QUESTION}
+      </button>
 
       {/* Starter questions */}
       <div
