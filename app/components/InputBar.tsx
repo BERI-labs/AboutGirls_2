@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { SCHOOL_NAME } from "../lib/school-config";
 
 interface InputBarProps {
   onSend: (text: string) => void;
@@ -51,7 +50,7 @@ export function InputBar({
           className="flex items-end gap-2 rounded-2xl border px-4 py-3 transition-all duration-150 cursor-text"
           style={{
             background: "var(--school-bg)",
-            borderColor: canSend ? "var(--school-primary)" : "var(--school-border)",
+            borderColor: canSend ? "var(--school-accent)" : "var(--school-border)",
             boxShadow: canSend
               ? "0 2px 12px var(--school-shadow)"
               : "0 1px 4px var(--school-shadow)",
@@ -79,7 +78,7 @@ export function InputBar({
             aria-label="Send message"
             className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-150"
             style={{
-              background: canSend ? "var(--school-primary)" : "var(--school-accent-light)",
+              background: canSend ? "var(--school-accent)" : "var(--school-accent-light)",
               color: canSend ? "#ffffff" : "var(--school-text-muted)",
               cursor: canSend ? "pointer" : "not-allowed",
               boxShadow: canSend ? "0 2px 8px var(--school-shadow)" : "none",
@@ -102,7 +101,7 @@ export function InputBar({
         </div>
 
         <p className="text-center text-[10px] mt-2" style={{ color: "var(--school-text-soft)" }}>
-          {SCHOOL_NAME} AI Assistant may make mistakes. Verify important information with the school.
+          Beri may make mistakes. Verify important information with the school.
         </p>
       </div>
     </div>
