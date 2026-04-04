@@ -3,15 +3,15 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import type { AppState, Message } from "../lib/types";
 import { RAGOrchestrator } from "../lib/rag";
-import { SCHOOL_NAME, LOGO_PATH } from "../lib/school-config";
+import { SCHOOL_NAME } from "../lib/school-config";
 import { WelcomeScreen } from "./WelcomeScreen";
 import { MessageList } from "./MessageList";
 import { InputBar } from "./InputBar";
-import { AboutModal } from "./AboutModal";
+import { AboutBeriModal } from "./AboutBeriModal";
 
 type WorkerStatus = "loading" | "orama-ready" | "embedder-ready" | "embedder-fallback";
 
-const ABOUT_STORAGE_KEY = "ashford-about-seen";
+const ABOUT_STORAGE_KEY = "beri-about-seen";
 const MAX_MESSAGES_PER_CONVERSATION = 42;
 const MAX_MESSAGES_PER_WINDOW = 3;
 const RATE_WINDOW_MS = 8000;
@@ -23,7 +23,7 @@ export function ChatWindow() {
   const [workerStatus, setWorkerStatus] = useState<WorkerStatus>("loading");
   const [embedderProgress, setEmbedderProgress] = useState(0);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const [aboutBeriOpen, setAboutBeriOpen] = useState(false);
 
   // Rate limiting
   const [messageCount, setMessageCount] = useState(0);
@@ -32,23 +32,24 @@ export function ChatWindow() {
   const orchestratorRef = useRef<RAGOrchestrator | null>(null);
   const workerRef = useRef<Worker | null>(null);
 
+  // Check API key availability at startup
   const apiKeyMissing =
     typeof window !== "undefined" &&
     !process.env.NEXT_PUBLIC_GROQ_API_KEY;
 
-  // Show About popup on first visit
+  // Show About Beri popup on first visit
   useEffect(() => {
     try {
       if (!localStorage.getItem(ABOUT_STORAGE_KEY)) {
-        setAboutOpen(true);
+        setAboutBeriOpen(true);
       }
     } catch {
       // localStorage unavailable
     }
   }, []);
 
-  const closeAbout = () => {
-    setAboutOpen(false);
+  const closeAboutBeri = () => {
+    setAboutBeriOpen(false);
     try {
       localStorage.setItem(ABOUT_STORAGE_KEY, "1");
     } catch {
@@ -115,7 +116,7 @@ export function ChatWindow() {
           id: crypto.randomUUID(),
           role: "assistant",
           content:
-            "You have reached the maximum number of messages for this conversation. Please refresh the page to start a new conversation.",
+            "You have reached the maximum number of messages for this conversation. Please take time to read through the responses provided. If you need further help, refresh the page to start a new conversation.",
         };
         setMessages((prev) => [
           ...prev,
@@ -135,7 +136,7 @@ export function ChatWindow() {
           id: crypto.randomUUID(),
           role: "assistant",
           content:
-            "You are sending messages too quickly. Please slow down and read through the responses before asking another question.",
+            "You are sending messages too quickly. Please slow down and read through the responses before asking another question. Beri is here to help, not to be stress-tested.",
         };
         setMessages((prev) => [
           ...prev,
@@ -227,14 +228,22 @@ export function ChatWindow() {
         role="status"
         aria-label={`Loading ${SCHOOL_NAME} AI assistant`}
       >
+        {/* SEO: descriptive alt text for the loading screen logo */}
         <img
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${LOGO_PATH}`}
-          alt={`${SCHOOL_NAME} logo`}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/beri-logo.png`}
+          alt={`Beri — AI assistant for ${SCHOOL_NAME}`}
           className="h-16 object-contain"
           onError={(e) => {
-            e.currentTarget.style.display = "none";
+            const target = e.currentTarget;
+            target.style.display = "none";
           }}
         />
+        <div
+          className="hidden text-3xl font-bold"
+          style={{ color: "var(--school-text)" }}
+        >
+          Beri
+        </div>
 
         <div className="w-64 flex flex-col gap-2">
           <div
@@ -248,7 +257,7 @@ export function ChatWindow() {
             style={{ background: "var(--school-accent-light)", height: 3 }}
           >
             <div
-              className="school-progress-bar"
+              className="beri-progress-bar"
               style={{
                 width:
                   workerStatus === "loading"
@@ -270,6 +279,8 @@ export function ChatWindow() {
         style={{ background: "var(--school-bg)" }}
         aria-label="Error"
       >
+        <div className="text-4xl mb-2" aria-hidden="true">🫐</div>
+        {/* SEO: H1 on error screen — only shown when no other content is displayed */}
         <h1
           className="text-xl font-semibold"
           style={{ color: "var(--school-error)" }}
@@ -285,52 +296,66 @@ export function ChatWindow() {
 
   // ── MAIN CHAT UI ──────────────────────────────────────────────
   return (
+    // SEO: use <main> landmark for accessibility and crawler content discovery
+    //
+    // Fix: welcome state uses min-h-screen (page/body scrolls freely) while
+    // chat state keeps h-screen so the InputBar stays pinned at the bottom.
+    // A fixed h-screen in welcome mode trapped scroll in the WelcomeScreen's
+    // inner overflow-y:auto container, causing scroll lock on Windows touch.
     <main
       className={`flex flex-col ${appState === "welcome" ? "min-h-screen" : "h-screen"}`}
       style={{ background: "var(--school-bg)" }}
     >
-      {/* About modal */}
-      <AboutModal open={aboutOpen} onClose={closeAbout} />
+      {/* About Beri modal (first-visit popup + reopenable) */}
+      <AboutBeriModal open={aboutBeriOpen} onClose={closeAboutBeri} />
 
-      {/* Header */}
+      {/* SEO: <header> landmark with descriptive logo alt text */}
       <header
         className="border-b"
         style={{ borderColor: "var(--school-border-light)" }}
       >
         <div className="flex items-center justify-between px-4 py-3 max-w-4xl mx-auto">
-          <div className="flex items-center gap-2">
-            <img
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${LOGO_PATH}`}
-              alt={`${SCHOOL_NAME} logo`}
-              className="h-8 object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-            <div>
-              <span
-                className="text-sm font-semibold"
-                style={{ color: "var(--school-primary)" }}
-              >
-                {SCHOOL_NAME}
-              </span>
-              <span
-                className="ml-2 text-xs"
-                style={{ color: "var(--school-text-soft)" }}
-              >
-                AI Assistant
-              </span>
-            </div>
+        <a
+          href="https://beri-labs.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="BERI Labs — student-built AI tools for education"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+          {/* SEO: descriptive alt text for header logo */}
+          <img
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.png`}
+            alt="BERI Labs logo"
+            className="w-7 h-7"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+          <div>
+            <span
+              className="text-sm font-semibold"
+              style={{ color: "var(--school-text)" }}
+            >
+              Beri
+            </span>
+            <span
+              className="ml-2 text-xs"
+              style={{ color: "var(--school-text-soft)" }}
+            >
+              Habs Girls AI Assistant
+            </span>
           </div>
+        </a>
 
-          <button
-            onClick={() => setAboutOpen(true)}
-            className="text-xs font-semibold uppercase tracking-widest transition-opacity hover:opacity-60"
-            style={{ color: "var(--school-text-muted)" }}
-            aria-label={`About ${SCHOOL_NAME} Assistant`}
-          >
-            About
-          </button>
+        {/* About Beri button — always visible after first visit popup */}
+        <button
+          onClick={() => setAboutBeriOpen(true)}
+          className="text-xs font-semibold uppercase tracking-widest transition-opacity hover:opacity-60"
+          style={{ color: "var(--school-text-muted)" }}
+          aria-label="Open About Beri"
+        >
+          About Beri
+        </button>
         </div>
       </header>
 
