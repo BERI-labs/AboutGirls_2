@@ -5,14 +5,14 @@ import remarkGfm from "remark-gfm";
 import type { Message } from "../lib/types";
 import { SourcePanel } from "./SourcePanel";
 import { buildReportMailto } from "../lib/report";
-import { SCHOOL_NAME, LOGO_PATH } from "../lib/school-config";
 
-/** Strip stray HTML tags the LLM sometimes injects */
+/** Strip stray HTML tags the LLM sometimes injects (e.g. `<br>•`) and
+ *  convert them to proper markdown so ReactMarkdown renders them correctly. */
 function sanitiseContent(raw: string): string {
   return raw
-    .replace(/<br\s*\/?>\s*[•·‣⁃]/g, "\n- ")
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/&bull;/gi, "- ");
+    .replace(/<br\s*\/?>\s*[•·‣⁃]/g, "\n- ")   // <br>• → markdown bullet
+    .replace(/<br\s*\/?>/gi, "\n")                // lone <br> → newline
+    .replace(/&bull;/gi, "- ");                   // &bull; entity → dash
 }
 
 interface MessageBubbleProps {
@@ -41,17 +41,19 @@ export function MessageBubble({ message, precedingUserText }: MessageBubbleProps
 
   return (
     <div className="flex items-start gap-3 mb-6 animate-slide-up">
-      {/* Avatar */}
-      <div className="flex-shrink-0 w-7 h-7 overflow-hidden mt-0.5">
+      {/* Beri avatar */}
+      <div
+        className="flex-shrink-0 w-7 h-7 overflow-hidden mt-0.5"
+      >
         <img
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${LOGO_PATH}`}
-          alt={SCHOOL_NAME}
-          className="w-full h-full object-contain"
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.png`}
+          alt="Beri"
+          className="w-full h-full object-cover"
           onError={(e) => {
             const target = e.currentTarget;
             target.style.display = "none";
             const parent = target.parentElement!;
-            parent.innerHTML = `<span style="font-size:14px;display:flex;align-items:center;justify-content:center;height:100%;width:100%;background:#1B4F72;color:#fff;border-radius:50%;font-weight:700">A</span>`;
+            parent.innerHTML = '<span style="font-size:16px;display:flex;align-items:center;justify-content:center;height:100%;width:100%">🫐</span>';
           }}
         />
       </div>
@@ -64,10 +66,10 @@ export function MessageBubble({ message, precedingUserText }: MessageBubbleProps
             background: "var(--school-surface)",
             color: "var(--school-text)",
             boxShadow: "0 2px 12px var(--school-shadow)",
-            borderLeft: "2px solid var(--school-primary)",
+            borderLeft: "2px solid var(--school-accent)",
           }}
         >
-          <div className={`school-prose ${message.isStreaming ? "school-cursor" : ""}`}>
+          <div className={`beri-prose ${message.isStreaming ? "beri-cursor" : ""}`}>
             {message.content ? (
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -113,7 +115,7 @@ export function MessageBubble({ message, precedingUserText }: MessageBubbleProps
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 font-medium underline"
-                      style={{ color: "var(--school-primary)" }}
+                      style={{ color: "var(--school-accent-hover)" }}
                     >
                       {children}
                       <svg className="w-3 h-3 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
