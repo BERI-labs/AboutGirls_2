@@ -6,7 +6,10 @@ interface SourcePanelProps {
   sources: SearchResult[];
 }
 
-/** Lightweight markdown renderer for citation text. */
+/**
+ * Lightweight markdown renderer for citation text.
+ * Handles: bold, italic, tables, line breaks.
+ */
 function renderMarkdown(text: string): React.ReactNode {
   const lines = text.split("\n");
   const elements: React.ReactNode[] = [];
@@ -15,7 +18,7 @@ function renderMarkdown(text: string): React.ReactNode {
   while (i < lines.length) {
     const line = lines[i];
 
-    // Detect markdown table
+    // Detect markdown table (line starting with |)
     if (line.trim().startsWith("|")) {
       const tableLines: string[] = [];
       while (i < lines.length && lines[i].trim().startsWith("|")) {
@@ -26,6 +29,7 @@ function renderMarkdown(text: string): React.ReactNode {
       continue;
     }
 
+    // Regular line — render inline markdown
     elements.push(
       <span key={elements.length}>
         {renderInline(line)}
@@ -38,6 +42,7 @@ function renderMarkdown(text: string): React.ReactNode {
   return elements;
 }
 
+/** Parse a markdown table block into a <table> element. */
 function renderTable(lines: string[], key: number): React.ReactNode {
   const parseRow = (line: string) =>
     line
@@ -45,6 +50,7 @@ function renderTable(lines: string[], key: number): React.ReactNode {
       .slice(1, -1)
       .map((cell) => cell.trim());
 
+  // Filter out separator rows (e.g. |---|---|)
   const dataRows = lines.filter(
     (l) => !/^\|[\s\-:|]+\|$/.test(l.trim())
   );
@@ -63,7 +69,7 @@ function renderTable(lines: string[], key: number): React.ReactNode {
               <th
                 key={j}
                 className="text-left px-2 py-1 border-b font-semibold"
-                style={{ borderColor: "var(--school-accent-light)", color: "var(--school-primary)" }}
+                style={{ borderColor: "var(--school-accent-light)", color: "var(--school-accent-hover)" }}
               >
                 {renderInline(cell)}
               </th>
@@ -90,7 +96,9 @@ function renderTable(lines: string[], key: number): React.ReactNode {
   );
 }
 
+/** Render inline markdown: **bold** and *italic*. */
 function renderInline(text: string): React.ReactNode {
+  // Bold: allow single * within content (e.g. **A*–A**); italic: not preceded/followed by word char
   const parts = text.split(/(\*\*(?:[^*]|\*(?!\*))+\*\*|(?<!\w)\*[^*]+\*(?!\w))/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
@@ -110,11 +118,12 @@ function renderInline(text: string): React.ReactNode {
 export function SourcePanel({ sources }: SourcePanelProps) {
   if (!sources || sources.length === 0) return null;
 
+  // Sort by decreasing match percentage
   const sorted = [...sources].sort((a, b) => b.score - a.score);
 
   return (
     <div className="mt-2 space-y-2 animate-fade-in">
-      <span className="text-xs" style={{ color: "var(--school-primary)" }}>
+      <span className="text-xs" style={{ color: "var(--school-accent)" }}>
         {sources.length} source{sources.length !== 1 ? "s" : ""} cited
       </span>
       {sorted.map((s, i) => (
@@ -128,7 +137,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
         >
           <summary
             className="flex items-center gap-2 px-3 py-2 cursor-pointer text-xs transition-colors select-none list-none"
-            style={{ color: "var(--school-primary)" }}
+            style={{ color: "var(--school-accent-hover)" }}
           >
             <svg
               className="w-3 h-3 transition-transform duration-200 group-open:rotate-90 flex-shrink-0"
@@ -141,7 +150,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
             </svg>
             <span className="font-medium truncate">{s.chunk.title}</span>
             <span className="ml-auto text-[10px] flex-shrink-0 mr-2" style={{ color: "var(--school-text-muted)" }}>
-              {(s.score * 100).toFixed(0)}% match
+              {Math.min(100, Math.round(s.score * 100))}% match
             </span>
             {s.chunk.url && (
               <a
@@ -151,7 +160,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
                 onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors flex-shrink-0"
                 style={{
-                  color: "var(--school-primary)",
+                  color: "var(--school-accent-hover)",
                   background: "var(--school-accent-light)",
                   border: "1px solid var(--school-accent)",
                 }}
@@ -159,7 +168,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>
-                View source
+                Take me here
               </a>
             )}
           </summary>
