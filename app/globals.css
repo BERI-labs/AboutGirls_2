@@ -36,6 +36,17 @@ html {
 }
 
 body {
+  /*
+   * Fix: use min-height instead of height so the body can grow beyond the
+   * viewport when the welcome-screen content overflows.  Previously,
+   * height: 100% locked the body to exactly the viewport height, making
+   * page-level scroll impossible and forcing all scrolling into a nested
+   * overflow-y:auto container — which caused touch/trackpad scroll to get
+   * "stuck" at the bottom on Windows Surface / Edge / Chrome.
+   *
+   * overscroll-behavior: none prevents the pull-to-refresh / elastic-bounce
+   * effect from interfering with the inner MessageList scroll in chat mode.
+   */
   min-height: 100%;
   overscroll-behavior: none;
   background-color: var(--school-bg);
@@ -60,13 +71,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--school-primary);
+  background: var(--school-accent);
 }
 
-/* Blinking cursor during streaming */
-.school-cursor::after {
+/* Accent blinking cursor during streaming */
+.beri-cursor::after {
   content: "▋";
-  color: var(--school-primary);
+  color: var(--school-accent);
   animation: blink 1s step-end infinite;
   margin-left: 1px;
 }
@@ -77,52 +88,60 @@ body {
 }
 
 /* Progress bar */
-.school-progress-bar {
+.beri-progress-bar {
   height: 3px;
-  background: linear-gradient(90deg, var(--school-primary), var(--school-accent));
+  background: linear-gradient(90deg, var(--school-accent), var(--school-accent-light));
   border-radius: 2px;
   transition: width 0.3s ease;
 }
 
-/* Prose styling for markdown content in bubbles */
-.school-prose p {
+/* Prose styling for markdown-like content in bubbles */
+.beri-prose p {
   margin-bottom: 0.5rem;
 }
 
-.school-prose p:last-child {
+.beri-prose p:last-child {
   margin-bottom: 0;
 }
 
-.school-prose ul,
-.school-prose ol {
+.beri-prose ul,
+.beri-prose ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
 }
 
-.school-prose ul {
+.beri-prose ul {
   list-style-type: disc;
 }
 
-.school-prose ol {
+.beri-prose ol {
   list-style-type: decimal;
 }
 
-.school-prose li {
+.beri-prose li {
   margin-bottom: 0.25rem;
 }
 
-.school-prose code {
+.beri-prose code {
   background: rgba(201, 96, 80, 0.08);
-  color: var(--school-primary);
+  color: var(--school-accent-hover);
   padding: 0.1em 0.3em;
   border-radius: 3px;
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.875em;
 }
 
-.school-prose strong {
+.beri-prose strong {
   color: var(--school-text);
   font-weight: 600;
+}
+
+/* Reasoning accordion content */
+.reasoning-content {
+  color: var(--school-text-soft);
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 /* Chip animation */
