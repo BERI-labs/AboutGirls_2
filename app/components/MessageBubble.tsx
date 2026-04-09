@@ -29,7 +29,7 @@ export function MessageBubble({ message, precedingUserText }: MessageBubbleProps
         <div
           className="max-w-[75%] px-4 py-3 rounded-2xl rounded-tr-sm text-sm leading-relaxed"
           style={{
-            background: "var(--school-user-bubble)",
+            background: "var(--school-accent-light)",
             color: "var(--school-text)",
           }}
         >

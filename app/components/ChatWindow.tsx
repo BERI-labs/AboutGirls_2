@@ -309,16 +309,10 @@ export function ChatWindow() {
             />
             <div>
               <span
-                className="text-sm font-semibold"
+                className="text-sm"
                 style={{ color: "var(--school-primary)" }}
               >
-                {SCHOOL_NAME}
-              </span>
-              <span
-                className="ml-2 text-xs"
-                style={{ color: "var(--school-text-soft)" }}
-              >
-                AI Assistant
+                <strong>Beri</strong> Habs Girls AI Assistant
               </span>
             </div>
           </div>
