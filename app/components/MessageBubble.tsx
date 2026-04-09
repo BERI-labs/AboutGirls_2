@@ -51,7 +51,7 @@ export function MessageBubble({ message, precedingUserText }: MessageBubbleProps
             const target = e.currentTarget;
             target.style.display = "none";
             const parent = target.parentElement!;
-            parent.innerHTML = `<span style="font-size:14px;display:flex;align-items:center;justify-content:center;height:100%;width:100%;background:#1B4F72;color:#fff;border-radius:50%;font-weight:700">A</span>`;
+            parent.innerHTML = `<span style="font-size:14px;display:flex;align-items:center;justify-content:center;height:100%;width:100%;background:#e5554f;color:#fff;border-radius:50%;font-weight:700">B</span>`;
           }}
         />
       </div>

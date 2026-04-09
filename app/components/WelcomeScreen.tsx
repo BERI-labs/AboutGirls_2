@@ -10,11 +10,11 @@ export function WelcomeScreen({ onQuestion }: WelcomeScreenProps) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
       {/* Logo */}
-      <div className="mb-8 flex flex-col items-center gap-4">
+      <div className="mb-6 flex flex-col items-center">
         <img
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${LOGO_PATH}`}
           alt={`${SCHOOL_NAME} logo`}
-          className="h-14 object-contain"
+          className="h-20 w-20 object-contain"
           onError={(e) => {
             const target = e.currentTarget;
             target.style.display = "none";
@@ -24,15 +24,10 @@ export function WelcomeScreen({ onQuestion }: WelcomeScreenProps) {
         />
         {/* Fallback if no logo image */}
         <div
-          className="hidden items-center gap-3"
-          style={{ display: "none" }}
+          className="hidden w-20 h-20 rounded-full items-center justify-center text-2xl font-bold text-white"
+          style={{ display: "none", background: "var(--school-accent)" }}
         >
-          <span
-            className="text-3xl font-bold tracking-tight"
-            style={{ color: "var(--school-primary)" }}
-          >
-            {SCHOOL_NAME}
-          </span>
+          B
         </div>
       </div>
 
