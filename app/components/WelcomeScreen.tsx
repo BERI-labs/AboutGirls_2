@@ -52,19 +52,28 @@ export function WelcomeScreen({ onQuestion }: WelcomeScreenProps) {
           className="leading-relaxed"
           style={{ color: "var(--school-text-soft)", fontSize: "13.8px" }}
         >
-          Inspiring Minds, Shaping Futures. This AI assistant uses
-          retrieval-augmented generation to deliver cited, accurate answers
-          from the school knowledge base.
+          Beri is a student-built AI tool created by{" "}
+          <a
+            href="https://beri-labs.github.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--school-primary)", fontWeight: 600 }}
+          >
+            BERI Labs
+          </a>{" "}
+          — a student-led AI education framework that builds bespoke AI tools
+          for schools. It uses retrieval-augmented generation to deliver cited,
+          accurate answers from the school knowledge base.
         </p>
       </div>
 
       {/* Featured question */}
       <button
         onClick={() => onQuestion(FEATURED_QUESTION)}
-        className="starter-chip w-full max-w-2xl px-4 py-3 rounded-lg text-sm text-left mb-3 font-medium"
+        className="starter-chip w-full max-w-2xl px-4 py-3 rounded-lg text-sm text-center mb-3 font-medium"
         style={{
-          color: "var(--school-surface, #fff)",
-          background: "var(--school-primary)",
+          color: "#ffffff",
+          background: "#e5554f",
           border: "none",
         }}
       >
