@@ -12,9 +12,9 @@
   --school-border-light: #eaecf2;
   --school-primary:      #0F1929;
   --school-primary-light:#1a2d4a;
-  --school-accent:       #C96050;
-  --school-accent-light: #FBEAE7;
-  --school-accent-hover: #b04f3e;
+  --school-accent:       #e5554f;
+  --school-accent-light: #fdecea;
+  --school-accent-hover: #c43b35;
   --school-text:         #1a1a1a;
   --school-text-soft:    #6b6b6b;
   --school-text-muted:   #9ca3af;
@@ -123,7 +123,7 @@ body {
 }
 
 .beri-prose code {
-  background: rgba(201, 96, 80, 0.08);
+  background: rgba(229, 85, 79, 0.08);
   color: var(--school-accent-hover);
   padding: 0.1em 0.3em;
   border-radius: 3px;

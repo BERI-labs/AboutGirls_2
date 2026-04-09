@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Leaves -->
+  <ellipse cx="36" cy="22" rx="14" ry="7" fill="#22c55e" transform="rotate(-35 36 22)"/>
+  <ellipse cx="62" cy="20" rx="14" ry="7" fill="#16a34a" transform="rotate(25 62 20)"/>
+  <circle cx="49" cy="29" r="4" fill="#15803d"/>
+
+  <!-- Back-left berry -->
+  <circle cx="30" cy="60" r="21" fill="#4338ca"/>
+  <!-- Crown dimple -->
+  <circle cx="30" cy="40" r="5" fill="#1e1b4b"/>
+  <!-- Shine -->
+  <circle cx="20" cy="52" r="4.5" fill="rgba(255,255,255,0.18)"/>
+
+  <!-- Back-right berry -->
+  <circle cx="68" cy="58" r="20" fill="#3730a3"/>
+  <!-- Crown dimple -->
+  <circle cx="68" cy="39" r="4.5" fill="#1e1b4b"/>
+  <!-- Shine -->
+  <circle cx="58" cy="50" r="4" fill="rgba(255,255,255,0.16)"/>
+
+  <!-- Front center berry (largest, on top) -->
+  <circle cx="49" cy="70" r="24" fill="#6d28d9"/>
+  <!-- Crown dimple -->
+  <circle cx="49" cy="47" r="5.5" fill="#1e1b4b"/>
+  <!-- Shine -->
+  <circle cx="38" cy="62" r="6" fill="rgba(255,255,255,0.2)"/>
+</svg>
