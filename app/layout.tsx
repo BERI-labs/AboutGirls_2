@@ -5,7 +5,7 @@ import { SCHOOL_NAME, LOGO_PATH } from "./lib/school-config";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
-  title: `${SCHOOL_NAME} AI Assistant`,
+  title: `Beri | ${SCHOOL_NAME} AI Assistant`,
   description: `Ask the ${SCHOOL_NAME} AI assistant about admissions, fees, curriculum, sport, and school life.`,
   icons: {
     icon: `${basePath}${LOGO_PATH}`,

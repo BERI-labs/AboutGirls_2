@@ -114,7 +114,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
 
   return (
     <div className="mt-2 space-y-2 animate-fade-in">
-      <span className="text-xs" style={{ color: "var(--school-primary)" }}>
+      <span className="text-xs" style={{ color: "var(--school-accent)" }}>
         {sources.length} source{sources.length !== 1 ? "s" : ""} cited
       </span>
       {sorted.map((s, i) => (
@@ -128,7 +128,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
         >
           <summary
             className="flex items-center gap-2 px-3 py-2 cursor-pointer text-xs transition-colors select-none list-none"
-            style={{ color: "var(--school-primary)" }}
+            style={{ color: "var(--school-accent)" }}
           >
             <svg
               className="w-3 h-3 transition-transform duration-200 group-open:rotate-90 flex-shrink-0"
@@ -149,7 +149,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors flex-shrink-0"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] transition-colors flex-shrink-0"
                 style={{
                   color: "var(--school-primary)",
                   background: "var(--school-accent-light)",
@@ -159,7 +159,7 @@ export function SourcePanel({ sources }: SourcePanelProps) {
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>
-                View source
+                Take me here
               </a>
             )}
           </summary>
