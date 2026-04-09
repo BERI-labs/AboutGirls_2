@@ -7,7 +7,7 @@ import { SCHOOL_NAME, LOGO_PATH } from "../lib/school-config";
 import { WelcomeScreen } from "./WelcomeScreen";
 import { MessageList } from "./MessageList";
 import { InputBar } from "./InputBar";
-import { AboutModal } from "./AboutModal";
+import { AboutBeriModal } from "./AboutBeriModal";
 
 type WorkerStatus = "loading" | "orama-ready" | "embedder-ready" | "embedder-fallback";
 
@@ -290,7 +290,7 @@ export function ChatWindow() {
       style={{ background: "var(--school-bg)" }}
     >
       {/* About modal */}
-      <AboutModal open={aboutOpen} onClose={closeAbout} />
+      <AboutBeriModal open={aboutOpen} onClose={closeAbout} />
 
       {/* Header */}
       <header
@@ -327,9 +327,9 @@ export function ChatWindow() {
             onClick={() => setAboutOpen(true)}
             className="text-xs font-semibold uppercase tracking-widest transition-opacity hover:opacity-60"
             style={{ color: "var(--school-text-muted)" }}
-            aria-label={`About ${SCHOOL_NAME} Assistant`}
+            aria-label={`About Beri`}
           >
-            About
+            About Beri
           </button>
         </div>
       </header>
